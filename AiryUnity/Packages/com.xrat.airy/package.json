@@ -1,0 +1,18 @@
+{
+  "name": "com.xrat.airy",
+  "version": "0.1.0",
+  "displayName": "Xrat Airy LiDAR",
+  "description": "Receive, decode and render RoboSense Airy (96-beam hemispherical LiDAR) point clouds in Unity 6. Live MSOP/DIFOP over UDP or replay of Wireshark/RSView .pcap captures. Not an official RoboSense product.",
+  "unity": "6000.0",
+  "keywords": [
+    "lidar",
+    "robosense",
+    "airy",
+    "point cloud",
+    "pcap"
+  ],
+  "author": {
+    "name": "Xrat"
+  },
+  "dependencies": {}
+}
