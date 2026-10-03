@@ -1,0 +1,34 @@
+# GitHub Actions workflow. Copy to .github/workflows/ci.yml to enable it
+# (the automation that created this repo could not add workflow files).
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: C# core tests (package Runtime/Core + Tests/Editor)
+        run: dotnet test tests/Xrat.Airy.Core.Tests
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Python tools tests
+        run: python -m unittest discover -s tools/tests -v
+
+      - name: Every package asset has a committed .meta file
+        run: |
+          python tools/generate_unity_meta.py
+          git status --porcelain
+          test -z "$(git status --porcelain)"
