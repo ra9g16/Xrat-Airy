@@ -155,8 +155,9 @@ The shipped project uses the Built-in pipeline, so there's nothing to set up. Th
 (`Graphics.RenderPrimitives` plus an unlit, tag-less shader) also works unchanged in **URP**. For a URP
 project, install URP from the Package Manager or create the project from the URP template, then add the package.
 
-The point shader doesn't handle XR *single-pass instanced* stereo yet. For headsets, use *Multi Pass* in the XR
-plug-in settings, or extend the shader with Unity's stereo-instancing macros.
+For XR headsets, the point shader uses Unity's stereo-instancing macros, so *Single Pass Instanced* and
+*Multi Pass* should both work. Neither has been tested on a headset yet. If points show in only one eye,
+switch the XR plug-in to *Multi Pass*. Point size stays in pixels per eye.
 
 ### Using the package in another Unity 6 project
 

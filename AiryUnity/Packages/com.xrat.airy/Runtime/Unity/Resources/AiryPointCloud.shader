@@ -29,11 +29,18 @@ Shader "Xrat/Airy/PointCloud"
             float4 _IntensityRange; // x,y
             float _RoundPoints;
 
+            struct appdata
+            {
+                uint vertexId : SV_VertexID;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
             struct v2f
             {
                 float4 pos : SV_POSITION;
                 float4 color : COLOR;
                 float2 corner : TEXCOORD0;
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             // Google's polynomial approximation of the Turbo colour map (sRGB).
@@ -59,10 +66,17 @@ Shader "Xrat/Airy/PointCloud"
                 return (value - range.x) / max(1e-5, range.y - range.x);
             }
 
-            v2f vert(uint vertexId : SV_VertexID)
+            v2f vert(appdata v)
             {
-                uint index = vertexId / 6;
-                uint corner = vertexId - index * 6;
+                // XR single-pass instanced: Unity doubles the instance count of the draw and these macros select
+                // the eye (and its view-projection matrix) from SV_InstanceID. Without XR they compile to nothing.
+                v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_OUTPUT(v2f, o);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
+                uint index = v.vertexId / 6;
+                uint corner = v.vertexId - index * 6;
                 // Triangles (0,1,2) and (3,4,5) -> quad corners (-1,-1) (1,-1) (1,1) / (-1,-1) (1,1) (-1,1).
                 float2 c = float2(
                     (corner == 1 || corner == 2 || corner == 4) ? 1.0 : -1.0,
@@ -71,7 +85,6 @@ Shader "Xrat/Airy/PointCloud"
                 float4 data = _Points[index];
                 float3 world = mul(_LocalToWorld, float4(data.xyz, 1.0)).xyz;
 
-                v2f o;
                 o.pos = mul(UNITY_MATRIX_VP, float4(world, 1.0));
                 o.pos.xy += c * _PointSize * o.pos.w / _ScreenParams.xy;
                 o.corner = c;
