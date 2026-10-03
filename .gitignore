@@ -1,0 +1,39 @@
+# Unity (project lives in AiryUnity/)
+/AiryUnity/[Ll]ibrary/
+/AiryUnity/[Tt]emp/
+/AiryUnity/[Oo]bj/
+/AiryUnity/[Bb]uild/
+/AiryUnity/[Bb]uilds/
+/AiryUnity/[Ll]ogs/
+/AiryUnity/[Uu]ser[Ss]ettings/
+/AiryUnity/[Mm]emoryCaptures/
+/AiryUnity/[Rr]ecordings/
+/AiryUnity/*.csproj
+/AiryUnity/*.sln
+/AiryUnity/*.slnx
+/AiryUnity/.vs/
+/AiryUnity/.vscode/
+/AiryUnity/.idea/
+/AiryUnity/.utmp/
+*.pidb.meta
+*.pdb.meta
+sysinfo.txt
+crashlytics-build.properties
+
+# dotnet test project
+/tests/**/bin/
+/tests/**/obj/
+
+# Python
+__pycache__/
+*.pyc
+
+# Captures (often large; commit deliberately with `git add -f`)
+*.pcap
+*.pcapng
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
